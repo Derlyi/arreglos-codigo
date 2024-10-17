@@ -1,0 +1,53 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4" style="color: #4A4A4A; font-weight: bold;">Informe de Ventas</h2>
+
+    <!-- Formulario de filtro por fechas -->
+    <div class="card p-4 shadow-sm mb-4">
+        <h5 class="card-title mb-3" style="color: #3730A3;"><strong>Filtrar por Fechas</strong></h5>
+        <form method="get" class="row g-3 align-items-center">
+            <div class="col-md-5">
+                {{ form.as_p }}
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100" style="background-color: #3730A3; border: none;">
+                    <i class="fas fa-file-pdf"></i> Generar Informe en PDF
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <!-- Tabla de detalles del informe -->
+    {% if orders %}
+    <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th>Fecha</th>
+                    <th>Número de Orden</th>
+                    <th>Cliente</th>
+                    <th>Total de Venta</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.date|date:"d/m/Y" }}</td>
+                    <td>{{ order.order_number }}</td>
+                    <td>{{ order.customer_name }}</td>
+                    <td>${{ order.total_amount }}</td>
+                    <td>{{ order.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}
